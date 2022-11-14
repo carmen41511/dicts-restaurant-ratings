@@ -1,6 +1,6 @@
 """Restaurant rating lister."""
 dt = {}
-from random import choice
+import random
 
 def ratings(filename):
     file = open(filename)
@@ -10,7 +10,7 @@ def ratings(filename):
         dt[name] = rating.rstrip()
 
     for k, v in sorted(dt.items(), key= lambda x: x[0].upper()): 
-        st += "{k} is rated at {v}\n"
+        st += f"{k} is rated at {v}\n"
     
     return st
 
@@ -32,13 +32,15 @@ def add_new():
     
     return dt
 
-def update_random():
-    ratings()
-    print(dt.keys())
-    # random_rest = choice(dt.keys())
-    # print(f"{random_rest} is rated at {dt[random_rest]}")
-    # new_rating = input("What the new rating should be?")
-    # dt[random_rest] = new_rating
+def update_random(filename):
+    ratings(filename)
+    ls = []
+    for k in dt.keys():
+        ls.append(k)
+    random_rest = random.choice(ls)
+    print(f"{random_rest} is rated at {dt[random_rest]}")
+    new_rating = input("What the new rating should be?")
+    dt[random_rest] = new_rating
 
 
 if __name__ == '__main__':
@@ -48,19 +50,19 @@ if __name__ == '__main__':
 
     while request != 'q':
         if request == 'a':
-            ratings('scores.txt')
+            print(ratings('scores.txt'))
             request = input(
-        "\nWhat would you like to do?\na. Seeing all the ratings \nb. Adding a new restaurant \nq. Quitting \nEnter your response: \n"
+        "\nWhat would you like to do?\na. Seeing all the ratings \nb. Adding a new restaurant \nc. Updating a random restaurant's rating \nq. Quitting \nEnter your response: \n"
         )
         elif request == 'b':
             add_new()
             request = input(
-        "\nWhat would you like to do?\na. Seeing all the ratings \nb. Adding a new restaurant \nq. Quitting \nEnter your response: \n"
+        "\nWhat would you like to do?\na. Seeing all the ratings \nb. Adding a new restaurant \nc. Updating a random restaurant's rating \nq. Quitting \nEnter your response: \n"
         )
         elif request == 'c':
-            update_random()
+            update_random('scores.txt')
             request = input(
-        "\nWhat would you like to do?\na. Seeing all the ratings \nb. Adding a new restaurant \nq. Quitting \nEnter your response: \n"
+        "\nWhat would you like to do?\na. Seeing all the ratings \nb. Adding a new restaurant \nc. Updating a random restaurant's rating \nq. Quitting \nEnter your response: \n"
         )
         else:
             print("Please enter an valid response")
